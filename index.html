@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookmarkLinks - Save links once. Access them everywhere on Apple.</title>
+    <meta name="description"
+        content="A beautiful, fast, Apple-native bookmark app. No subscriptions, no accounts — just your bookmarks, synced across all your devices.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --apple-blue: #2997ff;
+            --apple-blue-hover: #0071e3;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-white: #000000;
+            --bg-gray: #1d1d1f;
+            --bg-black: #000000;
+            --nav-height: 48px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-black);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--bg-black);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: rgba(29, 29, 31, 0.72);
+            backdrop-filter: saturate(180%) blur(30px);
+            -webkit-backdrop-filter: saturate(180%) blur(30px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1024px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+        }
+
+        .nav-logo {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-cta {
+            background: var(--apple-blue);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--apple-blue-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding-top: calc(var(--nav-height) + 60px);
+            padding-bottom: 80px;
+            background: var(--bg-black);
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.07;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .hero-tagline {
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .btn-primary {
+            background: var(--apple-blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--apple-blue-hover);
+        }
+
+        .btn-secondary {
+            color: var(--apple-blue);
+            padding: 12px 24px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            text-decoration: underline;
+        }
+
+        .hero-devices {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .device-mockup {
+            position: absolute;
+            background: #1c1c1e;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 1px solid #333;
+            transition: transform 0.1s linear;
+        }
+
+        /* Mac Mockup */
+        .mockup-mac {
+            width: 600px;
+            height: 380px;
+            border-radius: 20px;
+            z-index: 1;
+            background: #000;
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-mac-screen {
+            flex: 1;
+            background: linear-gradient(180deg, #1e1e1e 0%, #0d0d0d 100%);
+            margin: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ui-sidebar {
+            width: 20%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            left: 0;
+        }
+
+        .ui-grid {
+            position: absolute;
+            top: 20px;
+            left: 25%;
+            right: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .ui-card {
+            height: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+        }
+
+        /* iPad Mockup */
+        .mockup-ipad {
+            width: 320px;
+            height: 440px;
+            border-radius: 24px;
+            right: 0;
+            z-index: 2;
+            background: #000;
+            border: 3px solid #333;
+            transform: translateX(120px);
+        }
+
+        .mockup-ipad-screen {
+            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+            height: 100%;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ui-split {
+            display: flex;
+            height: 100%;
+        }
+
+        .ui-split-left {
+            width: 30%;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .ui-split-right {
+            flex: 1;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            align-content: start;
+        }
+
+        .ui-split-card {
+            height: 50px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+        }
+
+        /* iPhone Mockup */
+        .mockup-iphone {
+            width: 180px;
+            height: 380px;
+            border-radius: 32px;
+            left: 0;
+            z-index: 3;
+            background: #000;
+            border: 4px solid #444;
+            transform: translateX(-150px);
+        }
+
+        .mockup-iphone-notch {
+            width: 60px;
+            height: 18px;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 10;
+        }
+
+        .mockup-iphone-screen {
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ui-list {
+            padding-top: 30px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .ui-row {
+            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive hero devices */
+        @media (max-width: 900px) {
+            .hero-devices {
+                transform: scale(0.7);
+                margin-top: -50px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-devices {
+                transform: scale(0.5);
+                height: 300px;
+            }
+
+            .mockup-ipad {
+                transform: translateX(60px);
+            }
+
+            .mockup-iphone {
+                transform: translateX(-60px);
+            }
+        }
+
+        .device-macbook {
+            width: 500px;
+            height: 320px;
+            background: linear-gradient(145deg, #e8e8e8 0%, #d0d0d0 100%);
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            border-radius: 12px 12px 0 0;
+            padding: 12px 12px 0;
+            display: none;
+        }
+
+        /* Platform Sections */
+        .section {
+            padding: 100px 22px;
+            text-align: center;
+        }
+
+        .section-white {
+            background: var(--bg-white);
+        }
+
+        .section-gray {
+            background: var(--bg-gray);
+        }
+
+        .section-black {
+            background: var(--bg-black);
+            color: white;
+        }
+
+        .section-black .section-subtitle {
+            color: #a1a1a6;
+        }
+
+        .section-content {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .section-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .section-link {
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-size: 17px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .section-link:hover {
+            text-decoration: underline;
+        }
+
+        .section-link::after {
+            content: '›';
+            font-size: 20px;
+        }
+
+        .section-black .section-link {
+            color: #2997ff;
+        }
+
+        /* Mock bookmark styles for showcases */
+        .mock-bookmark {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mock-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .mock-text {
+            flex: 1;
+        }
+
+        .mock-title {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-bottom: 4px;
+            width: 80%;
+        }
+
+        .mock-url {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            width: 60%;
+        }
+
+        /* Device showcase in sections */
+        .showcase-device {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .iphone-showcase {
+            width: 260px;
+            height: 520px;
+            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+            margin: 0 auto;
+            border-radius: 48px;
+            padding: 16px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+        }
+
+        .iphone-showcase-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 36px;
+            padding: 50px 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .iphone-showcase-screen::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 32px;
+            background: #1a1a1a;
+            border-radius: 20px;
+        }
+
+        .ipad-showcase {
+            width: 100%;
+            max-width: 700px;
+            aspect-ratio: 4/3;
+            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+            margin: 0 auto;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+        }
+
+        .ipad-showcase-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 8px;
+            display: flex;
+        }
+
+        .ipad-sidebar {
+            width: 220px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px 0 0 8px;
+            padding: 20px;
+        }
+
+        .ipad-sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .ipad-sidebar-item.active {
+            background: rgba(0, 113, 227, 0.1);
+        }
+
+        .ipad-sidebar-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: var(--apple-blue);
+        }
+
+        .ipad-sidebar-text {
+            height: 12px;
+            width: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .ipad-content {
+            flex: 1;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            align-content: start;
+        }
+
+        .ipad-bookmark {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .ipad-bookmark-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .ipad-bookmark-title {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .ipad-bookmark-url {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            width: 70%;
+        }
+
+        .mac-showcase {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mac-screen {
+            background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 12px 12px 0 0;
+            padding: 0;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .mac-titlebar {
+            height: 32px;
+            background: linear-gradient(180deg, #3d3d3d 0%, #323232 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 8px;
+        }
+
+        .mac-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-btn-close {
+            background: #ff5f57;
+        }
+
+        .mac-btn-min {
+            background: #ffbd2e;
+        }
+
+        .mac-btn-max {
+            background: #28c840;
+        }
+
+        .mac-content {
+            display: flex;
+            height: calc(100% - 32px);
+        }
+
+        .mac-sidebar {
+            width: 200px;
+            background: rgba(45, 45, 45, 0.9);
+            padding: 16px;
+        }
+
+        .mac-sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 2px;
+        }
+
+        .mac-sidebar-item.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mac-sidebar-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            background: #0071e3;
+        }
+
+        .mac-sidebar-text {
+            height: 10px;
+            width: 70px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .mac-main {
+            flex: 1;
+            background: #1a1a1a;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            align-content: start;
+        }
+
+        .mac-bookmark {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .mac-bookmark-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .mac-bookmark-title {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+
+        .mac-bookmark-url {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            width: 60%;
+        }
+
+        .mac-stand {
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
+            margin: 0 auto;
+            border-radius: 0 0 4px 4px;
+            position: relative;
+        }
+
+        .mac-stand::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 8px;
+            background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 50px 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+        }
+
+        .feature-card {
+            background: transparent;
+            border: none;
+            text-align: center;
+            padding: 0;
+        }
+
+        .feature-card:hover {
+            transform: none;
+        }
+
+        .feature-image {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Placeholder style for feature images */
+        .feature-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-image-placeholder svg {
+            opacity: 0.5;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* Pricing Section */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+
+        .pricing-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 980px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .pricing-period {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .pricing-features {
+            list-style: none;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: #28c840;
+            font-weight: 600;
+        }
+
+        .pricing-cta {
+            display: block;
+            text-align: center;
+            background: var(--apple-blue);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            margin-top: 24px;
+            transition: background 0.2s ease;
+        }
+
+        .pricing-cta:hover {
+            background: var(--apple-blue-hover);
+        }
+
+        .pricing-cta-outline {
+            background: transparent;
+            color: var(--apple-blue);
+            border: 1px solid var(--apple-blue);
+        }
+
+        .pricing-cta-outline:hover {
+            background: var(--apple-blue);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-gray);
+            padding: 20px 22px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Device Screenshot Slideshow */
+        .device-slideshow {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .device-slideshow.ipad-slideshow {
+            max-width: 700px;
+        }
+
+        .device-slideshow.mac-slideshow {
+            max-width: 800px;
+        }
+
+        .slideshow-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slideshow-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Device frames for screenshots */
+        .screenshot-frame-iphone {
+            width: 260px;
+            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 48px;
+            padding: 16px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-frame-iphone-inner {
+            background: #1c1c1e;
+            border-radius: 36px;
+            overflow: hidden;
+            aspect-ratio: 9/19.5;
+            position: relative;
+        }
+
+        .screenshot-frame-iphone-inner::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 28px;
+            background: #000;
+            border-radius: 16px;
+            z-index: 10;
+        }
+
+        .screenshot-frame-ipad {
+            width: 100%;
+            max-width: 700px;
+            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-frame-ipad-inner {
+            background: #1c1c1e;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .screenshot-frame-mac {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .screenshot-frame-mac-screen {
+            background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            position: relative;
+            border: 2px solid #3a3a3a;
+        }
+
+        .screenshot-frame-mac-screen::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            width: 48px;
+            height: 12px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 12'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23ff5f56'/%3E%3Ccircle cx='22' cy='6' r='5' fill='%23ffbd2e'/%3E%3Ccircle cx='38' cy='6' r='5' fill='%2327c93f'/%3E%3C/svg%3E");
+            z-index: 10;
+        }
+
+        .screenshot-frame-mac-stand {
+            width: 180px;
+            height: 50px;
+            background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
+            margin: 0 auto;
+            border-radius: 0 0 4px 4px;
+            position: relative;
+        }
+
+        /* Screenshot placeholder */
+        .screenshot-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .screenshot-placeholder svg {
+            opacity: 0.4;
+        }
+
+        .screenshot-placeholder span {
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        /* Slideshow navigation dots */
+        .slideshow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .slideshow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slideshow-dot.active {
+            background: var(--apple-blue);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .slideshow-dot:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .slideshow-dot.active:hover {
+            background: var(--apple-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-tagline {
+                font-size: 21px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .section-subtitle {
+                font-size: 17px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid,
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .ipad-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mac-main {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-devices {
+                height: 300px;
+            }
+
+            .device-iphone {
+                width: 150px;
+                height: 300px;
+            }
+        }
+
+        /* Animations - GPU accelerated */
+        .fade-in {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+            will-change: opacity, transform;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Remove will-change after animation */
+        .fade-in.animated {
+            will-change: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">BookmarkLinks</a>
+            <a href="https://apps.apple.com" class="nav-cta">Download Free</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>BookmarkLinks</h1>
+            <p class="hero-tagline">Save links once. Access them everywhere.</p>
+            <div class="hero-buttons">
+                <a href="https://apps.apple.com" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                    </svg>
+                    Download on App Store
+                </a>
+                <a href="#features" class="btn-secondary">Learn more</a>
+            </div>
+            <div class="hero-devices">
+                <!-- Mac (Center) -->
+                <div class="device-mockup mockup-mac" id="mac-hero">
+                    <div class="mockup-mac-screen">
+                        <div class="ui-sidebar"></div>
+                        <div class="ui-grid">
+                            <div class="ui-card"></div>
+                            <div class="ui-card"></div>
+                            <div class="ui-card"></div>
+                            <div class="ui-card"></div>
+                            <div class="ui-card"></div>
+                            <div class="ui-card"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- iPad (Right) -->
+                <div class="device-mockup mockup-ipad" id="ipad-hero">
+                    <div class="mockup-ipad-screen">
+                        <div class="ui-split">
+                            <div class="ui-split-left"></div>
+                            <div class="ui-split-right">
+                                <div class="ui-split-card"></div>
+                                <div class="ui-split-card"></div>
+                                <div class="ui-split-card"></div>
+                                <div class="ui-split-card"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- iPhone (Left) -->
+                <div class="device-mockup mockup-iphone" id="iphone-hero">
+                    <div class="mockup-iphone-notch"></div>
+                    <div class="mockup-iphone-screen">
+                        <div class="ui-list">
+                            <div class="ui-row"></div>
+                            <div class="ui-row"></div>
+                            <div class="ui-row"></div>
+                            <div class="ui-row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- iPhone Section -->
+    <section class="section section-gray fade-in">
+        <div class="section-content">
+            <h2 class="section-title">iPhone</h2>
+            <p class="section-subtitle">Your bookmarks, always in your pocket.</p>
+            <div class="section-links">
+                <a href="#" class="section-link">Learn more</a>
+            </div>
+            <!-- iPhone Slideshow -->
+            <div class="device-slideshow" data-slideshow="iphone">
+                <div class="slideshow-track">
+                    <!-- Slide 1 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-iphone">
+                            <div class="screenshot-frame-iphone-inner">
+                                <!-- Replace with: <img src="path/to/iphone-screenshot-1.png" alt="Screenshot 1"> -->
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Bookmark List View</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-iphone">
+                            <div class="screenshot-frame-iphone-inner">
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Folder Organization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-iphone">
+                            <div class="screenshot-frame-iphone-inner">
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Share Extension</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-dots">
+                    <div class="slideshow-dot active" data-slide="0"></div>
+                    <div class="slideshow-dot" data-slide="1"></div>
+                    <div class="slideshow-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- iPad Section -->
+    <section class="section section-white fade-in">
+        <div class="section-content">
+            <h2 class="section-title">iPad</h2>
+            <p class="section-subtitle">See more. Do more. Organize everything.</p>
+            <div class="section-links">
+                <a href="#" class="section-link">Learn more</a>
+            </div>
+            <!-- iPad Slideshow -->
+            <div class="device-slideshow ipad-slideshow" data-slideshow="ipad">
+                <div class="slideshow-track">
+                    <!-- Slide 1 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-ipad">
+                            <div class="screenshot-frame-ipad-inner">
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Split View Mode</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-ipad">
+                            <div class="screenshot-frame-ipad-inner">
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Grid View Layout</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-ipad">
+                            <div class="screenshot-frame-ipad-inner">
+                                <div class="screenshot-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Drag & Drop</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-dots">
+                    <div class="slideshow-dot active" data-slide="0"></div>
+                    <div class="slideshow-dot" data-slide="1"></div>
+                    <div class="slideshow-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mac Section -->
+    <section class="section section-black fade-in">
+        <div class="section-content">
+            <h2 class="section-title">Mac</h2>
+            <p class="section-subtitle">Power and precision for the desktop.</p>
+            <div class="section-links">
+                <a href="#" class="section-link">Learn more</a>
+            </div>
+            <!-- Mac Slideshow -->
+            <div class="device-slideshow mac-slideshow" data-slideshow="mac">
+                <div class="slideshow-track">
+                    <!-- Slide 1 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-mac">
+                            <div class="screenshot-frame-mac-screen">
+                                <div class="screenshot-placeholder" style="padding-top: 24px;">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Main Window</span>
+                                </div>
+                            </div>
+                            <div class="screenshot-frame-mac-stand"></div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-mac">
+                            <div class="screenshot-frame-mac-screen">
+                                <div class="screenshot-placeholder" style="padding-top: 24px;">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Menu Bar Integration</span>
+                                </div>
+                            </div>
+                            <div class="screenshot-frame-mac-stand"></div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slideshow-slide">
+                        <div class="screenshot-frame-mac">
+                            <div class="screenshot-frame-mac-screen">
+                                <div class="screenshot-placeholder" style="padding-top: 24px;">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                            stroke-width="1.5" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                        <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Keyboard Shortcuts</span>
+                                </div>
+                            </div>
+                            <div class="screenshot-frame-mac-stand"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-dots">
+                    <div class="slideshow-dot active" data-slide="0"></div>
+                    <div class="slideshow-dot" data-slide="1"></div>
+                    <div class="slideshow-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section section-gray fade-in">
+        <div class="section-content">
+            <h2 class="section-title">Features</h2>
+            <p class="section-subtitle">Everything you need. Nothing you don't.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <!-- Replace with: <img src="path/to/icloud-sync.png" alt="iCloud Sync"> -->
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">iCloud Sync</h3>
+                    <p class="feature-desc">Your bookmarks sync instantly across iPhone, iPad, and Mac with iCloud.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Spotlight Search</h3>
+                    <p class="feature-desc">Find any bookmark instantly with system-wide Spotlight integration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Drag & Drop</h3>
+                    <p class="feature-desc">Simply drag links from Safari or any app directly into BookmarkLinks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Privacy First</h3>
+                    <p class="feature-desc">No accounts, no tracking. Your data stays on your devices and in your
+                        iCloud.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Folders</h3>
+                    <p class="feature-desc">Organize your bookmarks into folders and subfolders that make sense to you.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <div class="feature-image-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Quick Actions</h3>
+                    <p class="feature-desc">Keyboard shortcuts, widgets, and Siri make saving and accessing links
+                        effortless.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">Copyright © 2026 BookmarkLinks. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Optimized Intersection Observer for smooth scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Use requestAnimationFrame for smoother rendering
+                    requestAnimationFrame(() => {
+                        entry.target.classList.add('visible');
+                        // Remove will-change after animation completes to free GPU memory
+                        setTimeout(() => {
+                            entry.target.classList.add('animated');
+                        }, 850);
+                    });
+                    // Stop observing once animated
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Use requestIdleCallback for non-critical initialization
+        const initObservers = () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        };
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initObservers);
+        } else {
+            setTimeout(initObservers, 1);
+        }
+
+        // Parallax Effect for Hero Devices
+        const macHero = document.getElementById('mac-hero');
+        const ipadHero = document.getElementById('ipad-hero');
+        const iphoneHero = document.getElementById('iphone-hero');
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+
+                    // Hero Parallax (stops after 800px to save performance)
+                    if (scrollY < 800) {
+                        // Mac moves slowest (feels furthest)
+                        macHero.style.transform = `translateY(${scrollY * 0.1}px)`;
+                        // iPad moves medium
+                        ipadHero.style.transform = `translateX(120px) translateY(${scrollY * 0.2}px)`;
+                        // iPhone moves fastest (feels closest)
+                        iphoneHero.style.transform = `translateX(-150px) translateY(${scrollY * 0.3}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Device Screenshot Slideshows
+        document.querySelectorAll('.device-slideshow').forEach(slideshow => {
+            const track = slideshow.querySelector('.slideshow-track');
+            const slides = slideshow.querySelectorAll('.slideshow-slide');
+            const dots = slideshow.querySelectorAll('.slideshow-dot');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function goToSlide(index) {
+                currentSlide = index;
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            // Auto-advance every 4 seconds
+            let autoPlayInterval = setInterval(() => {
+                goToSlide((currentSlide + 1) % totalSlides);
+            }, 4000);
+
+            // Click on dots to navigate
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const slideIndex = parseInt(dot.dataset.slide);
+                    goToSlide(slideIndex);
+
+                    // Reset auto-play timer when user interacts
+                    clearInterval(autoPlayInterval);
+                    autoPlayInterval = setInterval(() => {
+                        goToSlide((currentSlide + 1) % totalSlides);
+                    }, 4000);
+                });
+            });
+
+            // Pause on hover
+            slideshow.addEventListener('mouseenter', () => {
+                clearInterval(autoPlayInterval);
+            });
+
+            slideshow.addEventListener('mouseleave', () => {
+                autoPlayInterval = setInterval(() => {
+                    goToSlide((currentSlide + 1) % totalSlides);
+                }, 4000);
+            });
+        });
+    </script>
+</body>
+
+</html>

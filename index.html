@@ -4,9 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookmarkLinks - Save links once. Access them everywhere on Apple.</title>
+    <title>TabLinker - Save links once. Access them everywhere on Apple.</title>
     <meta name="description"
         content="A beautiful, fast, Apple-native bookmark app. No subscriptions, no accounts — just your bookmarks, synced across all your devices.">
+    <link rel="canonical" href="https://tablinker.app/">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TabLinker - Save links once. Access them everywhere on Apple.">
+    <meta property="og:description"
+        content="A beautiful, fast, Apple-native bookmark app. No subscriptions, no accounts — just your bookmarks, synced across all your devices.">
+    <meta property="og:url" content="https://tablinker.app/">
+    <meta property="og:image" content="https://tablinker.app/assets/icons/og-image-1024.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:image:alt" content="TabLinker app icon">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TabLinker - Save links once. Access them everywhere on Apple.">
+    <meta name="twitter:description"
+        content="A beautiful, fast, Apple-native bookmark app. No subscriptions, no accounts — just your bookmarks, synced across all your devices.">
+    <meta name="twitter:image" content="https://tablinker.app/assets/icons/og-image-1024.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap"
@@ -19,8 +37,11 @@
         }
 
         :root {
-            --apple-blue: #2997ff;
-            --apple-blue-hover: #0071e3;
+            --accent-button: #5a6270;
+            --accent-button-hover: #697382;
+            --accent-link: #c7cfdb;
+            --accent-link-hover: #e0e5ed;
+            --accent-soft: rgba(199, 207, 219, 0.22);
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1a6;
             --bg-white: #000000;
@@ -69,6 +90,9 @@
         }
 
         .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             font-size: 21px;
             font-weight: 600;
             color: var(--text-primary);
@@ -76,8 +100,15 @@
             letter-spacing: -0.02em;
         }
 
+        .nav-logo-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            display: block;
+        }
+
         .nav-cta {
-            background: var(--apple-blue);
+            background: var(--accent-button);
             color: white;
             padding: 8px 16px;
             border-radius: 980px;
@@ -88,7 +119,7 @@
         }
 
         .nav-cta:hover {
-            background: var(--apple-blue-hover);
+            background: var(--accent-button-hover);
         }
 
         /* Hero Section */
@@ -135,7 +166,7 @@
         }
 
         .btn-primary {
-            background: var(--apple-blue);
+            background: var(--accent-button);
             color: white;
             padding: 12px 24px;
             border-radius: 980px;
@@ -149,11 +180,11 @@
         }
 
         .btn-primary:hover {
-            background: var(--apple-blue-hover);
+            background: var(--accent-button-hover);
         }
 
         .btn-secondary {
-            color: var(--apple-blue);
+            color: var(--accent-link);
             padding: 12px 24px;
             border-radius: 980px;
             text-decoration: none;
@@ -163,6 +194,7 @@
         }
 
         .btn-secondary:hover {
+            color: var(--accent-link-hover);
             text-decoration: underline;
         }
 
@@ -410,7 +442,7 @@
         }
 
         .section-link {
-            color: var(--apple-blue);
+            color: var(--accent-link);
             text-decoration: none;
             font-size: 17px;
             display: inline-flex;
@@ -419,6 +451,7 @@
         }
 
         .section-link:hover {
+            color: var(--accent-link-hover);
             text-decoration: underline;
         }
 
@@ -428,7 +461,7 @@
         }
 
         .section-black .section-link {
-            color: #2997ff;
+            color: var(--accent-link);
         }
 
         /* Mock bookmark styles for showcases */
@@ -543,14 +576,14 @@
         }
 
         .ipad-sidebar-item.active {
-            background: rgba(0, 113, 227, 0.1);
+            background: var(--accent-soft);
         }
 
         .ipad-sidebar-icon {
             width: 20px;
             height: 20px;
             border-radius: 4px;
-            background: var(--apple-blue);
+            background: var(--accent-button);
         }
 
         .ipad-sidebar-text {
@@ -667,7 +700,7 @@
             width: 16px;
             height: 16px;
             border-radius: 3px;
-            background: #0071e3;
+            background: var(--accent-button);
         }
 
         .mac-sidebar-text {
@@ -883,7 +916,7 @@
         .pricing-cta {
             display: block;
             text-align: center;
-            background: var(--apple-blue);
+            background: var(--accent-button);
             color: white;
             padding: 14px 24px;
             border-radius: 980px;
@@ -895,17 +928,17 @@
         }
 
         .pricing-cta:hover {
-            background: var(--apple-blue-hover);
+            background: var(--accent-button-hover);
         }
 
         .pricing-cta-outline {
             background: transparent;
-            color: var(--apple-blue);
-            border: 1px solid var(--apple-blue);
+            color: var(--accent-link);
+            border: 1px solid var(--accent-link);
         }
 
         .pricing-cta-outline:hover {
-            background: var(--apple-blue);
+            background: var(--accent-button);
             color: white;
         }
 
@@ -920,6 +953,24 @@
         .footer-text {
             font-size: 12px;
             color: var(--text-secondary);
+        }
+
+        .footer-links {
+            margin-top: 8px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
         }
 
         /* Device Screenshot Slideshow */
@@ -1081,7 +1132,7 @@
         }
 
         .slideshow-dot.active {
-            background: var(--apple-blue);
+            background: var(--accent-link);
             width: 24px;
             border-radius: 4px;
         }
@@ -1091,7 +1142,7 @@
         }
 
         .slideshow-dot.active:hover {
-            background: var(--apple-blue);
+            background: var(--accent-link-hover);
         }
 
         /* Slideshow navigation arrows */
@@ -1295,7 +1346,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="nav-logo">BookmarkLinks</a>
+            <a href="#" class="nav-logo">
+                <img src="assets/icons/favicon-32.png" alt="TabLinker icon" class="nav-logo-icon">
+                <span>TabLinker</span>
+            </a>
             <a href="https://apps.apple.com" class="nav-cta">Download Free</a>
         </div>
     </nav>
@@ -1303,7 +1357,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>BookmarkLinks</h1>
+            <h1>TabLinker</h1>
             <p class="hero-tagline">Save links once. Access them everywhere.</p>
             <div class="hero-buttons">
                 <a href="https://apps.apple.com" class="btn-primary">
@@ -1672,7 +1726,7 @@
                         </div>
                     </div>
                     <h3 class="feature-title">Drag & Drop</h3>
-                    <p class="feature-desc">Simply drag links from Safari or any app directly into BookmarkLinks.</p>
+                    <p class="feature-desc">Simply drag links from Safari or any app directly into TabLinker.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-image">
@@ -1730,7 +1784,11 @@
 
     <!-- Footer -->
     <footer>
-        <p class="footer-text">Copyright © 2026 BookmarkLinks. All rights reserved.</p>
+        <p class="footer-text">Copyright © 2026 TabLinker. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="privacy/index.html">Privacy</a>
+            <a href="terms/index.html">Terms</a>
+        </div>
     </footer>
 
     <script>
@@ -1772,8 +1830,6 @@
 
         // Parallax Effect for Hero Devices
         const macHero = document.getElementById('mac-hero');
-        const ipadHero = document.getElementById('ipad-hero');
-        const iphoneHero = document.getElementById('iphone-hero');
 
         let ticking = false;
         window.addEventListener('scroll', () => {
@@ -1783,12 +1839,8 @@
 
                     // Hero Parallax (stops after 800px to save performance)
                     if (scrollY < 800) {
-                        // Mac moves slowest (feels furthest)
+                        // Keep only Mac parallax; iPhone/iPad stay in CSS-set positions.
                         macHero.style.transform = `translateY(${scrollY * 0.1}px)`;
-                        // iPad moves medium
-                        ipadHero.style.transform = `translateX(120px) translateY(${scrollY * 0.2}px)`;
-                        // iPhone moves fastest (feels closest)
-                        iphoneHero.style.transform = `translateX(-150px) translateY(${scrollY * 0.3}px)`;
                     }
                     ticking = false;
                 });

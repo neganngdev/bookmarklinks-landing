@@ -973,6 +973,32 @@
             text-decoration: underline;
         }
 
+        .faq-list {
+            max-width: 760px;
+            margin: 32px auto 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .faq-link {
+            display: block;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px 18px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .faq-link:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.22);
+            transform: translateY(-1px);
+        }
+
         /* Device Screenshot Slideshow */
         .device-slideshow {
             position: relative;
@@ -1776,6 +1802,22 @@
                     <p class="feature-desc">Keyboard shortcuts, widgets, and Siri make saving and accessing links
                         effortless.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section section-black fade-in">
+        <div class="section-content">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <a class="faq-link" href="faq/how-to-copy-all-urls-from-tabs-in-safari.html">
+                    How to copy all URLs from tabs in Safari?
+                </a>
+                <a class="faq-link" href="faq/what-browsers-does-tabs-to-links-support.html">
+                    What browsers does Tabs to Links support?
+                </a>
             </div>
         </div>
     </section>

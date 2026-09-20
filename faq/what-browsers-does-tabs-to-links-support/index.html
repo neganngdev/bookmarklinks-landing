@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What browsers does Tabs to Links support? | TabLinker FAQ</title>
-    <meta name="description" content="Browser support information for Tabs to Links features in TabLinker.">
-    <link rel="canonical" href="https://tablinker.app/faq/what-browsers-does-tabs-to-links-support">
+    <meta name="description" content="Tabs to Links is now TabLinker. It supports 12 Mac browsers including Safari, Chrome, Edge, Brave, Arc, Vivaldi, and Opera. Firefox is not supported.">
+    <link rel="canonical" href="https://www.tablinker.app/faq/what-browsers-does-tabs-to-links-support">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
@@ -77,19 +77,58 @@
         li {
             margin-bottom: 8px;
         }
+
+        .card a {
+            color: var(--link);
+        }
+
+        .card a:hover {
+            color: var(--link-hover);
+        }
     </style>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "url": "https://www.tablinker.app/faq/what-browsers-does-tabs-to-links-support",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What browsers does Tabs to Links support?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tabs to Links is now called TabLinker. It turns the tabs you have open into a saved list of links, and it works with 12 browsers on Mac: Safari, Chrome, Edge, Brave, Arc, Vivaldi, Opera, Opera GX, Dia, Helium, Yandex, Decentr. Firefox is not supported, because it does not expose its open tabs to macOS automation. On iPhone and iPad, you can save links from any browser using the Share Sheet or the TabLinker Safari extension. See also: Which browsers are supported on Mac?"
+            }
+        }
+    ]
+}
+    </script>
 </head>
 <body>
     <main>
-        <a class="back" href="../../index.html">Back to Home</a>
+        <a class="back" href="/">Back to Home</a>
         <h1>What browsers does Tabs to Links support?</h1>
         <div class="card">
-            <p>Tabs to Links is designed for Safari-first workflows and can support additional browsers via the import flow on macOS.</p>
+            <p>Tabs to Links is now called <strong>TabLinker</strong>. It turns the tabs you have open into a saved
+                list of links, and it works with 12 browsers on Mac:</p>
             <ul>
-                <li>Safari is supported.</li>
-                <li>Other browser support depends on available macOS automation/import permissions.</li>
-                <li>Use the in-app import screen to see currently available browsers on your device.</li>
+                <li>Safari</li>
+                <li>Chrome</li>
+                <li>Edge</li>
+                <li>Brave</li>
+                <li>Arc</li>
+                <li>Vivaldi</li>
+                <li>Opera</li>
+                <li>Opera GX</li>
+                <li>Dia</li>
+                <li>Helium</li>
+                <li>Yandex</li>
+                <li>Decentr</li>
             </ul>
+            <p><strong>Firefox is not supported</strong>, because it does not expose its open tabs to macOS automation.</p>
+            <p>On iPhone and iPad, you can save links from any browser using the Share Sheet or the TabLinker
+                Safari extension.</p>
+            <p>See also: <a href="../which-browsers-are-supported-on-mac/">Which browsers are supported on Mac?</a></p>
         </div>
     </main>
 </body>

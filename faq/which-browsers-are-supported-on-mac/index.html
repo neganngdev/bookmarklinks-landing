@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Which browsers are supported on Mac? | TabLinker FAQ</title>
-    <meta name="description" content="Browser support details for TabLinker on Mac.">
-    <link rel="canonical" href="https://tablinker.app/faq/which-browsers-are-supported-on-mac">
+    <meta name="description" content="TabLinker imports and restores tabs from 12 Mac browsers: Safari, Chrome, Edge, Brave, Arc, Vivaldi, Opera, Opera GX, Dia, Helium, Yandex, and Decentr.">
+    <link rel="canonical" href="https://www.tablinker.app/faq/which-browsers-are-supported-on-mac">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
@@ -77,21 +77,49 @@
             margin-bottom: 8px;
         }
     </style>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "url": "https://www.tablinker.app/faq/which-browsers-are-supported-on-mac",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Which browsers are supported on Mac?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "TabLinker imports and restores tabs from 12 browsers on Mac: Safari, Chrome, Edge, Brave, Arc, Vivaldi, Opera, Opera GX, Dia, Helium, Yandex, Decentr. Firefox is not supported. Firefox does not expose its open tabs to macOS automation, so TabLinker cannot read them. You can still add Firefox links to TabLinker manually, or by importing an exported bookmarks file. The first time you import from a browser, macOS asks you to allow TabLinker to control it. If you declined, you can re-enable it in System Settings -> Privacy & Security -> Automation."
+            }
+        }
+    ]
+}
+    </script>
 </head>
 <body>
     <main>
-        <a class="back" href="../../index.html">Back to Home</a>
+        <a class="back" href="/">Back to Home</a>
         <h1>Which browsers are supported on Mac?</h1>
         <div class="card">
-            <p>TabLinker supports importing tabs from these browsers on Mac:</p>
+            <p>TabLinker imports and restores tabs from 12 browsers on Mac:</p>
             <ul>
                 <li>Safari</li>
-                <li>Google Chrome</li>
-                <li>Arc</li>
-                <li>Microsoft Edge</li>
+                <li>Chrome</li>
+                <li>Edge</li>
                 <li>Brave</li>
+                <li>Arc</li>
+                <li>Vivaldi</li>
+                <li>Opera</li>
+                <li>Opera GX</li>
+                <li>Dia</li>
+                <li>Helium</li>
+                <li>Yandex</li>
+                <li>Decentr</li>
             </ul>
-            <p>Browser availability also depends on your macOS permissions for browser automation/import features.</p>
+            <p><strong>Firefox is not supported.</strong> Firefox does not expose its open tabs to macOS automation,
+                so TabLinker cannot read them. You can still add Firefox links to TabLinker manually, or by importing
+                an exported bookmarks file.</p>
+            <p>The first time you import from a browser, macOS asks you to allow TabLinker to control it. If you
+                declined, you can re-enable it in System Settings &rarr; Privacy &amp; Security &rarr; Automation.</p>
         </div>
     </main>
 </body>

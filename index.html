@@ -16,7 +16,7 @@
     <meta property="og:description"
         content="Clear tab clutter on Mac without losing context. Save full browser sessions, restore later, and sync across iPhone, iPad, and Mac with iCloud.">
     <meta property="og:url" content="https://www.tablinker.app/">
-    <meta property="og:image" content="https://tablinker.app/assets/icons/og-image-1024.png">
+    <meta property="og:image" content="https://www.tablinker.app/assets/icons/og-image-1024.png">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
     <meta property="og:image:alt" content="TabLinker app icon">
@@ -24,1368 +24,90 @@
     <meta name="twitter:title" content="TabLinker - Tabs & Browser Session Manager for Mac, iPhone, and iPad">
     <meta name="twitter:description"
         content="Clear tab clutter on Mac without losing context. Save full browser sessions, restore later, and sync across iPhone, iPad, and Mac with iCloud.">
-    <meta name="twitter:image" content="https://tablinker.app/assets/icons/og-image-1024.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --accent-button: #5a6270;
-            --accent-button-hover: #697382;
-            --accent-link: #c7cfdb;
-            --accent-link-hover: #e0e5ed;
-            --accent-soft: rgba(199, 207, 219, 0.22);
-            --text-primary: #f5f5f7;
-            --text-secondary: #a1a1a6;
-            --bg-white: #000000;
-            --bg-gray: #1d1d1f;
-            --bg-black: #000000;
-            --nav-height: 48px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            background-color: var(--bg-black);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: var(--text-primary);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            background-color: var(--bg-black);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--nav-height);
-            background: rgba(29, 29, 31, 0.72);
-            backdrop-filter: saturate(180%) blur(30px);
-            -webkit-backdrop-filter: saturate(180%) blur(30px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1024px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 22px;
-        }
-
-        .nav-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 21px;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-logo-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
-            display: block;
-        }
-
-        .nav-cta {
-            background: var(--accent-button);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-button-hover);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            padding-top: calc(var(--nav-height) + 60px);
-            padding-bottom: 80px;
-            background: var(--bg-black);
-            text-align: center;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-content {
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 0 22px;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            line-height: 1.07;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-        }
-
-        .hero-tagline {
-            font-size: 28px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            letter-spacing: -0.01em;
-            margin-bottom: 20px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-bottom: 50px;
-        }
-
-        .btn-primary {
-            background: var(--accent-button);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.2s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-button-hover);
-        }
-
-        .btn-secondary {
-            color: var(--accent-link);
-            padding: 12px 24px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .btn-secondary:hover {
-            color: var(--accent-link-hover);
-            text-decoration: underline;
-        }
-
-        .hero-devices {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            height: 500px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .device-mockup {
-            position: absolute;
-            background: #1c1c1e;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            border: 1px solid #333;
-            transition: transform 0.1s linear;
-        }
-
-        /* Mac Mockup */
-        .mockup-mac {
-            width: 600px;
-            height: 380px;
-            border-radius: 20px;
-            z-index: 1;
-            background: #000;
-            border: 2px solid #333;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mockup-mac-screen {
-            flex: 1;
-            background: linear-gradient(180deg, #1e1e1e 0%, #0d0d0d 100%);
-            margin: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .ui-sidebar {
-            width: 20%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            position: absolute;
-            left: 0;
-        }
-
-        .ui-grid {
-            position: absolute;
-            top: 20px;
-            left: 25%;
-            right: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .ui-card {
-            height: 60px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-        }
-
-        /* iPad Mockup */
-        .mockup-ipad {
-            width: 320px;
-            height: 440px;
-            border-radius: 24px;
-            right: 0;
-            z-index: 2;
-            background: #000;
-            border: 3px solid #333;
-            transform: translateX(120px);
-        }
-
-        .mockup-ipad-screen {
-            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
-            height: 100%;
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .ui-split {
-            display: flex;
-            height: 100%;
-        }
-
-        .ui-split-left {
-            width: 30%;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .ui-split-right {
-            flex: 1;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            align-content: start;
-        }
-
-        .ui-split-card {
-            height: 50px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-        }
-
-        /* iPhone Mockup */
-        .mockup-iphone {
-            width: 180px;
-            height: 380px;
-            border-radius: 32px;
-            left: 0;
-            z-index: 3;
-            background: #000;
-            border: 4px solid #444;
-            transform: translateX(-150px);
-        }
-
-        .mockup-iphone-notch {
-            width: 60px;
-            height: 18px;
-            background: #000;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            z-index: 10;
-        }
-
-        .mockup-iphone-screen {
-            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
-            width: 100%;
-            height: 100%;
-            border-radius: 28px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .ui-list {
-            padding-top: 30px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .ui-row {
-            height: 40px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        /* Responsive hero devices */
-        @media (max-width: 900px) {
-            .hero-devices {
-                transform: scale(0.7);
-                margin-top: -50px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero-devices {
-                transform: scale(0.5);
-                height: 300px;
-            }
-
-            .mockup-ipad {
-                transform: translateX(60px);
-            }
-
-            .mockup-iphone {
-                transform: translateX(-60px);
-            }
-        }
-
-        .device-macbook {
-            width: 500px;
-            height: 320px;
-            background: linear-gradient(145deg, #e8e8e8 0%, #d0d0d0 100%);
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 0;
-            border-radius: 12px 12px 0 0;
-            padding: 12px 12px 0;
-            display: none;
-        }
-
-        /* Platform Sections */
-        .section {
-            padding: 100px 22px;
-            text-align: center;
-        }
-
-        .section-white {
-            background: var(--bg-white);
-        }
-
-        .section-gray {
-            background: var(--bg-gray);
-        }
-
-        .section-black {
-            background: var(--bg-black);
-            color: white;
-        }
-
-        .section-black .section-subtitle {
-            color: #a1a1a6;
-        }
-
-        .section-content {
-            max-width: 1024px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 48px;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 8px;
-        }
-
-        .section-subtitle {
-            font-size: 21px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .section-links {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-bottom: 50px;
-        }
-
-        .section-link {
-            color: var(--accent-link);
-            text-decoration: none;
-            font-size: 17px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .section-link:hover {
-            color: var(--accent-link-hover);
-            text-decoration: underline;
-        }
-
-        .section-link::after {
-            content: '›';
-            font-size: 20px;
-        }
-
-        .section-black .section-link {
-            color: var(--accent-link);
-        }
-
-        /* Mock bookmark styles for showcases */
-        .mock-bookmark {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mock-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-
-        .mock-text {
-            flex: 1;
-        }
-
-        .mock-title {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            margin-bottom: 4px;
-            width: 80%;
-        }
-
-        .mock-url {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            width: 60%;
-        }
-
-        /* Device showcase in sections */
-        .showcase-device {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px;
-        }
-
-        .iphone-showcase {
-            width: 260px;
-            height: 520px;
-            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
-            margin: 0 auto;
-            border-radius: 48px;
-            padding: 16px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
-        }
-
-        .iphone-showcase-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
-            border-radius: 36px;
-            padding: 50px 20px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .iphone-showcase-screen::before {
-            content: '';
-            position: absolute;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 32px;
-            background: #1a1a1a;
-            border-radius: 20px;
-        }
-
-        .ipad-showcase {
-            width: 100%;
-            max-width: 700px;
-            aspect-ratio: 4/3;
-            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
-            margin: 0 auto;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
-        }
-
-        .ipad-showcase-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
-            border-radius: 8px;
-            display: flex;
-        }
-
-        .ipad-sidebar {
-            width: 220px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px 0 0 8px;
-            padding: 20px;
-        }
-
-        .ipad-sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin-bottom: 4px;
-        }
-
-        .ipad-sidebar-item.active {
-            background: var(--accent-soft);
-        }
-
-        .ipad-sidebar-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            background: var(--accent-button);
-        }
-
-        .ipad-sidebar-text {
-            height: 12px;
-            width: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        .ipad-content {
-            flex: 1;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            align-content: start;
-        }
-
-        .ipad-bookmark {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .ipad-bookmark-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-
-        .ipad-bookmark-title {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            margin-bottom: 6px;
-        }
-
-        .ipad-bookmark-url {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            width: 70%;
-        }
-
-        .mac-showcase {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .mac-screen {
-            background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
-            border-radius: 12px 12px 0 0;
-            padding: 0;
-            aspect-ratio: 16/10;
-            overflow: hidden;
-            box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
-        }
-
-        .mac-titlebar {
-            height: 32px;
-            background: linear-gradient(180deg, #3d3d3d 0%, #323232 100%);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 8px;
-        }
-
-        .mac-btn {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .mac-btn-close {
-            background: #ff5f57;
-        }
-
-        .mac-btn-min {
-            background: #ffbd2e;
-        }
-
-        .mac-btn-max {
-            background: #28c840;
-        }
-
-        .mac-content {
-            display: flex;
-            height: calc(100% - 32px);
-        }
-
-        .mac-sidebar {
-            width: 200px;
-            background: rgba(45, 45, 45, 0.9);
-            padding: 16px;
-        }
-
-        .mac-sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 6px;
-            margin-bottom: 2px;
-        }
-
-        .mac-sidebar-item.active {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .mac-sidebar-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            background: var(--accent-button);
-        }
-
-        .mac-sidebar-text {
-            height: 10px;
-            width: 70px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-        }
-
-        .mac-main {
-            flex: 1;
-            background: #1a1a1a;
-            padding: 16px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            align-content: start;
-        }
-
-        .mac-bookmark {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 12px;
-        }
-
-        .mac-bookmark-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-
-        .mac-bookmark-title {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            margin-bottom: 4px;
-        }
-
-        .mac-bookmark-url {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            width: 60%;
-        }
-
-        .mac-stand {
-            width: 180px;
-            height: 60px;
-            background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
-            margin: 0 auto;
-            border-radius: 0 0 4px 4px;
-            position: relative;
-        }
-
-        .mac-stand::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 240px;
-            height: 8px;
-            background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
-            border-radius: 0 0 4px 4px;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 60px 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        @media (max-width: 900px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 50px 30px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 50px;
-            }
-        }
-
-        .feature-card {
-            background: transparent;
-            border: none;
-            text-align: center;
-            padding: 0;
-        }
-
-        .feature-card:hover {
-            transform: none;
-        }
-
-        .feature-image {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 24px;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Placeholder style for feature images */
-        .feature-image-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .feature-image-placeholder svg {
-            opacity: 0.5;
-        }
-
-        .feature-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
-        }
-
-        .feature-desc {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            max-width: 280px;
-            margin: 0 auto;
-        }
-
-        /* Pricing Section */
-        .pricing-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 800px;
-            margin: 50px auto 0;
-        }
-
-        .pricing-card {
-            background: var(--bg-white);
-            border-radius: 20px;
-            padding: 40px 32px;
-            text-align: left;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        .pricing-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 980px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-        }
-
-        .pricing-price {
-            font-size: 48px;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            margin-bottom: 8px;
-        }
-
-        .pricing-period {
-            font-size: 17px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .pricing-features {
-            list-style: none;
-        }
-
-        .pricing-features li {
-            padding: 8px 0;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            color: #28c840;
-            font-weight: 600;
-        }
-
-        .pricing-cta {
-            display: block;
-            text-align: center;
-            background: var(--accent-button);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 500;
-            margin-top: 24px;
-            transition: background 0.2s ease;
-        }
-
-        .pricing-cta:hover {
-            background: var(--accent-button-hover);
-        }
-
-        .pricing-cta-outline {
-            background: transparent;
-            color: var(--accent-link);
-            border: 1px solid var(--accent-link);
-        }
-
-        .pricing-cta-outline:hover {
-            background: var(--accent-button);
-            color: white;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-gray);
-            padding: 20px 22px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .footer-text {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .footer-cta {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-
-        .footer-cta a {
-            color: var(--accent-link);
-            text-decoration: none;
-        }
-
-        .footer-cta a:hover {
-            color: var(--accent-link-hover);
-            text-decoration: underline;
-        }
-
-        .footer-links {
-            margin-top: 8px;
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            font-size: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-            text-decoration: underline;
-        }
-
-        .faq-list {
-            max-width: 760px;
-            margin: 32px auto 0;
-            display: grid;
-            gap: 12px;
-        }
-
-        .faq-link {
-            display: block;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            padding: 16px 18px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 500;
-            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-        }
-
-        .faq-link:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.22);
-            transform: translateY(-1px);
-        }
-
-        /* Device Screenshot Slideshow */
-        .device-slideshow {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto;
-            padding: 0 70px;
-            overflow: visible;
-        }
-
-        .device-slideshow.ipad-slideshow {
-            max-width: 840px;
-            padding: 0 80px;
-        }
-
-        .device-slideshow.mac-slideshow {
-            max-width: 960px;
-            padding: 0 90px;
-        }
-
-        .slideshow-container {
-            position: relative;
-            overflow: hidden;
-            touch-action: pan-y;
-        }
-
-        .slideshow-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .slideshow-slide {
-            flex: 0 0 100%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Device frames for screenshots */
-        .screenshot-frame-iphone {
-            width: 260px;
-            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 48px;
-            padding: 16px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
-        }
-
-        .screenshot-frame-iphone-inner {
-            background: #1c1c1e;
-            border-radius: 36px;
-            overflow: hidden;
-            aspect-ratio: 9/19.5;
-            position: relative;
-        }
-
-        .screenshot-frame-iphone-inner::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 28px;
-            background: #000;
-            border-radius: 16px;
-            z-index: 10;
-        }
-
-        .screenshot-frame-ipad {
-            width: 100%;
-            max-width: 700px;
-            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
-        }
-
-        .screenshot-frame-ipad-inner {
-            background: #1c1c1e;
-            border-radius: 8px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-        }
-
-        .screenshot-frame-mac {
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .screenshot-frame-mac-screen {
-            background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
-            border-radius: 12px 12px 0 0;
-            overflow: hidden;
-            aspect-ratio: 16/10;
-            position: relative;
-            border: 2px solid #3a3a3a;
-        }
-
-        .screenshot-frame-mac-screen::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 12px;
-            width: 48px;
-            height: 12px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 12'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23ff5f56'/%3E%3Ccircle cx='22' cy='6' r='5' fill='%23ffbd2e'/%3E%3Ccircle cx='38' cy='6' r='5' fill='%2327c93f'/%3E%3C/svg%3E");
-            z-index: 10;
-        }
-
-        .screenshot-frame-mac-stand {
-            width: 180px;
-            height: 50px;
-            background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
-            margin: 0 auto;
-            border-radius: 0 0 4px 4px;
-            position: relative;
-        }
-
-        /* Screenshot placeholder */
-        .screenshot-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 14px;
-            gap: 12px;
-        }
-
-        .screenshot-placeholder svg {
-            opacity: 0.4;
-        }
-
-        .screenshot-placeholder span {
-            font-size: 12px;
-            opacity: 0.5;
-        }
-
-        /* Slideshow navigation dots */
-        .slideshow-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 24px;
-        }
-
-        .slideshow-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .slideshow-dot.active {
-            background: var(--accent-link);
-            width: 24px;
-            border-radius: 4px;
-        }
-
-        .slideshow-dot:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .slideshow-dot.active:hover {
-            background: var(--accent-link-hover);
-        }
-
-        /* Slideshow navigation arrows */
-        .slideshow-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-            color: white;
-        }
-
-        .slideshow-arrow:hover {
-            background: rgba(0, 0, 0, 0.7);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .slideshow-arrow:active {
-            transform: translateY(-50%) scale(0.95);
-        }
-
-        .slideshow-arrow-left {
-            left: 10px;
-        }
-
-        .slideshow-arrow-right {
-            right: 10px;
-        }
-
-        .slideshow-arrow svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        /* Responsive arrows */
-        @media (max-width: 1100px) {
-            .device-slideshow {
-                padding: 0 60px;
-            }
-
-            .device-slideshow.ipad-slideshow {
-                padding: 0 70px;
-            }
-
-            .device-slideshow.mac-slideshow {
-                padding: 0 75px;
-            }
-
-            .slideshow-arrow {
-                width: 40px;
-                height: 40px;
-            }
-
-            .slideshow-arrow svg {
-                width: 18px;
-                height: 18px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .device-slideshow {
-                padding: 0 50px;
-            }
-
-            .device-slideshow.ipad-slideshow {
-                padding: 0 55px;
-            }
-
-            .device-slideshow.mac-slideshow {
-                padding: 0 60px;
-            }
-
-            .slideshow-arrow {
-                width: 36px;
-                height: 36px;
-            }
-
-            .slideshow-arrow svg {
-                width: 16px;
-                height: 16px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .device-slideshow {
-                padding: 0 40px;
-            }
-
-            .device-slideshow.ipad-slideshow,
-            .device-slideshow.mac-slideshow {
-                padding: 0 45px;
-            }
-
-            .slideshow-arrow {
-                width: 32px;
-                height: 32px;
-            }
-
-            .slideshow-arrow svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .device-slideshow {
-                padding: 0;
-            }
-
-            .device-slideshow.ipad-slideshow,
-            .device-slideshow.mac-slideshow {
-                padding: 0;
-            }
-
-            .slideshow-arrow {
-                display: none;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .hero-tagline {
-                font-size: 21px;
-            }
-
-            .section-title {
-                font-size: 32px;
-            }
-
-            .section-subtitle {
-                font-size: 17px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .features-grid,
-            .pricing-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .ipad-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .mac-main {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero-devices {
-                height: 300px;
-            }
-
-            .device-iphone {
-                width: 150px;
-                height: 300px;
-            }
-        }
-
-        /* Animations - GPU accelerated */
-        .fade-in {
-            opacity: 0;
-            transform: translate3d(0, 30px, 0);
-            will-change: opacity, transform;
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-
-        /* Remove will-change after animation */
-        .fade-in.animated {
-            will-change: auto;
-        }
-    </style>
+    <meta name="twitter:image" content="https://www.tablinker.app/assets/icons/og-image-1024.png">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "TabLinker",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "macOS 14, iOS 17, iPadOS 17",
+        "url": "https://www.tablinker.app/",
+        "image": "https://www.tablinker.app/assets/icons/og-image-1024.png",
+        "description": "Save full browser sessions from 12 browsers on Mac, restore them later, and sync across iPhone, iPad, and Mac with iCloud.",
+        "downloadUrl": "https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574",
+        "featureList": [
+            "Import open tabs from 12 Mac browsers",
+            "Restore an entire session or a single window",
+            "Group tabs by the browser window they came from",
+            "Multi-select to move or delete tabs in bulk",
+            "Folders, tags, notes, and pinning",
+            "Recently Deleted with 30-day recovery",
+            "Search by title, URL, note, or tag, plus Spotlight",
+            "Export as JSON, HTML, Markdown, Plain Text, or Rich Text",
+            "Apple Shortcuts automation",
+            "Menu bar mode",
+            "iCloud sync with no account required"
+        ]
+    }
+    </script>
 </head>
 
 <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+        <symbol id="ic-import" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="M3 8.5h18" />
+            <path d="M12 11.5v5m0 0l-2.5-2.5M12 16.5l2.5-2.5" />
+        </symbol>
+        <symbol id="ic-save" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8v8M8 12h8" />
+        </symbol>
+        <symbol id="ic-restore" viewBox="0 0 24 24">
+            <path d="M3.5 12a8.5 8.5 0 1 0 2.8-6.3" />
+            <path d="M3 4.5v5h5" />
+        </symbol>
+        <symbol id="ic-window" viewBox="0 0 24 24">
+            <rect x="2.5" y="4.5" width="13" height="11" rx="2" />
+            <path d="M8 19.5h11a2 2 0 0 0 2-2V9" />
+        </symbol>
+        <symbol id="ic-select" viewBox="0 0 24 24">
+            <path d="M3.5 7l2 2 3-3" />
+            <path d="M3.5 15.5l2 2 3-3" />
+            <path d="M12.5 8h8" />
+            <path d="M12.5 16.5h8" />
+        </symbol>
+        <symbol id="ic-folder" viewBox="0 0 24 24">
+            <path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+        </symbol>
+        <symbol id="ic-trash" viewBox="0 0 24 24">
+            <path d="M4 7h16" />
+            <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+            <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
+        </symbol>
+        <symbol id="ic-search" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M16.5 16.5L21 21" />
+        </symbol>
+        <symbol id="ic-export" viewBox="0 0 24 24">
+            <path d="M12 15.5V3.5m0 0L8.5 7M12 3.5L15.5 7" />
+            <path d="M4 13.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4.5" />
+        </symbol>
+        <symbol id="ic-shortcut" viewBox="0 0 24 24">
+            <path d="M13 2.5L4.5 13.5H11L10 21.5l8.5-11.5H12l1-7.5z" />
+        </symbol>
+        <symbol id="ic-menubar" viewBox="0 0 24 24">
+            <rect x="2.5" y="3.5" width="19" height="4.5" rx="1.5" />
+            <path d="M14.5 5.75h4.5" />
+            <rect x="6" y="12" width="12" height="8" rx="2" />
+        </symbol>
+        <symbol id="ic-cloud" viewBox="0 0 24 24">
+            <path d="M7 18.5h10a4.25 4.25 0 0 0 .4-8.5 6.25 6.25 0 0 0-12-1.6A3.75 3.75 0 0 0 7 18.5z" />
+        </symbol>
+    </svg>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -1393,7 +115,7 @@
                 <img src="assets/icons/favicon-32.png" alt="TabLinker icon" class="nav-logo-icon">
                 <span>TabLinker</span>
             </a>
-            <a href="https://apps.apple.com/my/app/tablinker-tabs-manager/id6758283574?platform=mac" class="nav-cta">Download for Mac</a>
+            <a href="https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574?platform=mac" class="nav-cta">Download for Mac</a>
         </div>
     </nav>
 
@@ -1401,17 +123,17 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Clear tab clutter on Mac without losing your research context.</h1>
-            <p class="hero-tagline">TabLinker saves full browser sessions from Safari, Chrome, Arc, Edge, and Brave,
-                so you can close tabs now and restore everything later.</p>
+            <p class="hero-tagline">TabLinker saves full browser sessions from 12 browsers &mdash; Safari, Chrome, Arc,
+                Edge, Brave, Vivaldi, Opera, and more &mdash; so you can close tabs now and restore everything later.</p>
             <div class="hero-buttons">
-                <a href="https://apps.apple.com/my/app/tablinker-tabs-manager/id6758283574?platform=mac" class="btn-primary">
+                <a href="https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574?platform=mac" class="btn-primary">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                     </svg>
                     Download for Mac
                 </a>
-                <a href="https://apps.apple.com/my/app/tablinker-tabs-manager/id6758283574" class="btn-secondary">Download for iPhone & iPad</a>
+                <a href="https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574" class="btn-secondary">Download for iPhone & iPad</a>
             </div>
             <p class="section-subtitle">Syncs across iPhone, iPad, and Mac with iCloud.</p>
             <div class="hero-devices">
@@ -1459,13 +181,37 @@
         </div>
     </section>
 
+    <!-- Browser Support Strip -->
+    <section id="browsers" class="section section-gray section-compact fade-in">
+        <div class="section-content">
+            <h2 class="section-strip-title">Works with the browser you already use</h2>
+            <ul class="browser-strip">
+                <li class="browser-chip">Safari</li>
+                <li class="browser-chip">Chrome</li>
+                <li class="browser-chip">Edge</li>
+                <li class="browser-chip">Brave</li>
+                <li class="browser-chip">Arc</li>
+                <li class="browser-chip">Vivaldi</li>
+                <li class="browser-chip">Opera</li>
+                <li class="browser-chip">Opera GX</li>
+                <li class="browser-chip">Dia</li>
+                <li class="browser-chip">Helium</li>
+                <li class="browser-chip">Yandex</li>
+                <li class="browser-chip">Decentr</li>
+            </ul>
+            <p class="browser-note">Tab import and session restore on Mac.
+                <a href="faq/which-browsers-are-supported-on-mac/">See browser details</a>
+            </p>
+        </div>
+    </section>
+
     <!-- Mac Section -->
     <section class="section section-black fade-in">
         <div class="section-content">
             <h2 class="section-title">Mac</h2>
             <p class="section-subtitle">Advanced browser-session management for tab-heavy workflows.</p>
             <div class="section-links">
-                <a href="#features" class="section-link">See Mac features</a>
+                <a href="#features" class="section-link">See all features</a>
             </div>
             <!-- Mac Slideshow -->
             <div class="device-slideshow mac-slideshow" data-slideshow="mac">
@@ -1489,7 +235,7 @@
                                             <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <span>Import tabs from Safari, Chrome, Arc, Edge, and Brave</span>
+                                        <span>Import tabs from 12 browsers, including Safari, Chrome, Arc, and Vivaldi</span>
                                     </div>
                                 </div>
                                 <div class="screenshot-frame-mac-stand"></div>
@@ -1549,12 +295,12 @@
     </section>
 
     <!-- iPad Section -->
-    <section class="section section-white fade-in">
+    <section class="section section-gray fade-in">
         <div class="section-content">
             <h2 class="section-title">iPad</h2>
             <p class="section-subtitle">Review, organize, and continue your saved research anywhere.</p>
             <div class="section-links">
-                <a href="#features" class="section-link">See iPad experience</a>
+                <a href="#features" class="section-link">See all features</a>
             </div>
             <!-- iPad Slideshow -->
             <div class="device-slideshow ipad-slideshow" data-slideshow="ipad">
@@ -1635,12 +381,12 @@
     </section>
 
     <!-- iPhone Section -->
-    <section class="section section-gray fade-in">
+    <section class="section section-black fade-in">
         <div class="section-content">
             <h2 class="section-title">iPhone</h2>
             <p class="section-subtitle">Save, search, and access your context on the go.</p>
             <div class="section-links">
-                <a href="#features" class="section-link">See iPhone experience</a>
+                <a href="#features" class="section-link">See all features</a>
             </div>
             <!-- iPhone Slideshow -->
             <div class="device-slideshow" data-slideshow="iphone">
@@ -1728,96 +474,100 @@
             <p class="section-subtitle">Mac-first session power, plus cross-device organization.</p>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <!-- Replace with: <img src="path/to/icloud-sync.png" alt="iCloud Sync"> -->
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-import" /></svg>
                     </div>
-                    <h3 class="feature-title">Multi-Browser Session Import</h3>
-                    <p class="feature-desc">Import all open tabs from Safari, Chrome, Arc, Edge, and Brave on Mac.</p>
+                    <h3 class="feature-title">Import from 12 Browsers</h3>
+                    <p class="feature-desc">Pull in every open tab from Safari, Chrome, Arc, Edge, Brave, Vivaldi,
+                        Opera, and more &mdash; with a folder created automatically for each browser window.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-save" /></svg>
                     </div>
-                    <h3 class="feature-title">Save Full Context</h3>
-                    <p class="feature-desc">Capture multiple browser windows, full sessions, or individual tab groups.</p>
+                    <h3 class="feature-title">Save From Anywhere</h3>
+                    <p class="feature-desc">Grab the current tab with a keyboard shortcut on Mac, or save from any app
+                        on iPhone and iPad using the Share Sheet or the Safari extension.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-restore" /></svg>
                     </div>
-                    <h3 class="feature-title">Flexible Restore</h3>
-                    <p class="feature-desc">Restore an entire session or reopen only the windows you need.</p>
+                    <h3 class="feature-title">Restore a Session, or One Window</h3>
+                    <p class="feature-desc">Reopen an entire research session in one click, or pick out just the
+                        window you need. Links open in whichever browser you prefer.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-window" /></svg>
                     </div>
-                    <h3 class="feature-title">Organize Your Research</h3>
-                    <p class="feature-desc">Use folders, tags, and notes to keep links and sessions easy to manage.</p>
+                    <h3 class="feature-title">Browse by Window</h3>
+                    <p class="feature-desc">A dedicated By Window view groups tabs by the browser window they came
+                        from, so a 150-tab import stays easy to read.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-select" /></svg>
                     </div>
-                    <h3 class="feature-title">Search Anything Fast</h3>
-                    <p class="feature-desc">Find items instantly by title, URL, tag, or note.</p>
+                    <h3 class="feature-title">Select Many at Once</h3>
+                    <p class="feature-desc">Multi-select tabs to move or delete them in one go. On iPhone and iPad,
+                        just drag down the list to select a whole run of them.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-image">
-                        <div class="feature-image-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                                <path d="M21 15l-5-5-4 4-3-3-6 6" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-folder" /></svg>
                     </div>
-                    <h3 class="feature-title">Import, Export, Sync, Privacy</h3>
-                    <p class="feature-desc">Import bookmarks (JSON/HTML), paste URL lists, export in multiple formats,
-                        sync with iCloud, and use TabLinker with no account, ads, or tracking analytics.</p>
+                    <h3 class="feature-title">Folders, Tags, Notes, and Pins</h3>
+                    <p class="feature-desc">Organize with custom folder icons and colors, add tags and notes, and pin
+                        the folders you use most to the top of the list.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-trash" /></svg>
+                    </div>
+                    <h3 class="feature-title">Recently Deleted</h3>
+                    <p class="feature-desc">Deleted something you needed? Anything you remove is recoverable for 30
+                        days, the same way Reminders and Photos work.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-search" /></svg>
+                    </div>
+                    <h3 class="feature-title">Search Everything</h3>
+                    <p class="feature-desc">Find any saved tab by title, URL, note, or tag &mdash; instantly, and
+                        without leaving the app. Your tabs show up in Spotlight too.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-export" /></svg>
+                    </div>
+                    <h3 class="feature-title">Export However You Need</h3>
+                    <p class="feature-desc">JSON, HTML, Markdown, Plain Text, and Rich Text &mdash; or build your own
+                        layout with custom templates. Import from JSON, HTML, or a pasted list of URLs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-shortcut" /></svg>
+                    </div>
+                    <h3 class="feature-title">Apple Shortcuts</h3>
+                    <p class="feature-desc">Automate TabLinker with Shortcuts actions to save a URL, create a folder,
+                        list what is inside one, or open everything in it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-menubar" /></svg>
+                    </div>
+                    <h3 class="feature-title">Live in the Menu Bar</h3>
+                    <p class="feature-desc">Keep TabLinker in the menu bar and out of your Dock, so saving a session
+                        never means switching away from what you are doing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-cloud" /></svg>
+                    </div>
+                    <h3 class="feature-title">Private iCloud Sync</h3>
+                    <p class="feature-desc">Everything syncs across iPhone, iPad, and Mac through your own iCloud
+                        account. No TabLinker account, no ads, no tracking.</p>
                 </div>
             </div>
         </div>
@@ -1841,6 +591,12 @@
                 <a class="faq-link" href="faq/what-can-i-import-and-export/">
                     What can I import and export?
                 </a>
+                <a class="faq-link" href="faq/how-to-copy-all-urls-from-tabs-in-safari/">
+                    How do I copy all URLs from my Safari tabs?
+                </a>
+                <a class="faq-link" href="faq/what-browsers-does-tabs-to-links-support/">
+                    What browsers does Tabs to Links support?
+                </a>
             </div>
         </div>
     </section>
@@ -1851,203 +607,18 @@
     <footer>
         <p class="footer-cta">
             Ready to clean up tab clutter?
-            <a href="https://apps.apple.com/my/app/tablinker-tabs-manager/id6758283574?platform=mac">Download for Mac</a>
+            <a href="https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574?platform=mac">Download for Mac</a>
             or
-            <a href="https://apps.apple.com/my/app/tablinker-tabs-manager/id6758283574">Download for iPhone &amp; iPad</a>.
+            <a href="https://apps.apple.com/us/app/tablinker-tabs-manager/id6758283574">Download for iPhone &amp; iPad</a>.
         </p>
         <p class="footer-text">Copyright © 2026 TabLinker. All rights reserved.</p>
         <div class="footer-links">
-            <a href="privacy/index.html">Privacy</a>
-            <a href="terms/index.html">Terms</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </div>
     </footer>
 
-    <script>
-        // Optimized Intersection Observer for smooth scroll animations
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Use requestAnimationFrame for smoother rendering
-                    requestAnimationFrame(() => {
-                        entry.target.classList.add('visible');
-                        // Remove will-change after animation completes to free GPU memory
-                        setTimeout(() => {
-                            entry.target.classList.add('animated');
-                        }, 850);
-                    });
-                    // Stop observing once animated
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Use requestIdleCallback for non-critical initialization
-        const initObservers = () => {
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-        };
-
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(initObservers);
-        } else {
-            setTimeout(initObservers, 1);
-        }
-
-        // Parallax Effect for Hero Devices
-        const macHero = document.getElementById('mac-hero');
-
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrollY = window.scrollY;
-
-                    // Hero Parallax (stops after 800px to save performance)
-                    if (scrollY < 800) {
-                        // Keep only Mac parallax; iPhone/iPad stay in CSS-set positions.
-                        macHero.style.transform = `translateY(${scrollY * 0.1}px)`;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Device Screenshot Slideshows
-        document.querySelectorAll('.device-slideshow').forEach(slideshow => {
-            const container = slideshow.querySelector('.slideshow-container');
-            const track = slideshow.querySelector('.slideshow-track');
-            const slides = slideshow.querySelectorAll('.slideshow-slide');
-            const dots = slideshow.querySelectorAll('.slideshow-dot');
-            const leftArrow = slideshow.querySelector('.slideshow-arrow-left');
-            const rightArrow = slideshow.querySelector('.slideshow-arrow-right');
-            const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
-                'ontouchstart' in window ||
-                navigator.maxTouchPoints > 0;
-            let currentSlide = 0;
-            const totalSlides = slides.length;
-
-            function goToSlide(index) {
-                currentSlide = index;
-                track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-                // Update dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-
-            function nextSlide() {
-                goToSlide((currentSlide + 1) % totalSlides);
-            }
-
-            function prevSlide() {
-                goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
-            }
-
-            // Auto-advance every 4 seconds
-            let autoPlayInterval = setInterval(nextSlide, 4000);
-
-            function resetAutoPlay() {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = setInterval(nextSlide, 4000);
-            }
-
-            // Click on dots to navigate
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const slideIndex = parseInt(dot.dataset.slide);
-                    goToSlide(slideIndex);
-                    resetAutoPlay();
-                });
-            });
-
-            // Click on arrows to navigate
-            if (leftArrow) {
-                leftArrow.addEventListener('click', () => {
-                    prevSlide();
-                    resetAutoPlay();
-                });
-            }
-
-            if (rightArrow) {
-                rightArrow.addEventListener('click', () => {
-                    nextSlide();
-                    resetAutoPlay();
-                });
-            }
-
-            // Pause on hover
-            slideshow.addEventListener('mouseenter', () => {
-                clearInterval(autoPlayInterval);
-            });
-
-            slideshow.addEventListener('mouseleave', () => {
-                autoPlayInterval = setInterval(nextSlide, 4000);
-            });
-
-            if (isTouchDevice && container) {
-                const swipeThreshold = 40;
-                let touchStartX = 0;
-                let touchStartY = 0;
-
-                container.addEventListener('touchstart', (e) => {
-                    if (e.touches.length !== 1) {
-                        return;
-                    }
-                    const touch = e.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    clearInterval(autoPlayInterval);
-                }, { passive: true });
-
-                container.addEventListener('touchend', (e) => {
-                    if (e.changedTouches.length !== 1) {
-                        resetAutoPlay();
-                        return;
-                    }
-
-                    const touch = e.changedTouches[0];
-                    const deltaX = touch.clientX - touchStartX;
-                    const deltaY = touch.clientY - touchStartY;
-
-                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= swipeThreshold) {
-                        if (deltaX < 0) {
-                            nextSlide();
-                        } else {
-                            prevSlide();
-                        }
-                    }
-
-                    resetAutoPlay();
-                }, { passive: true });
-
-                container.addEventListener('touchcancel', () => {
-                    resetAutoPlay();
-                }, { passive: true });
-            }
-        });
-    </script>
+    <script src="/assets/app.js" defer></script>
 </body>
 
 </html>

@@ -207,34 +207,11 @@ nav {
     position: relative;
 }
 
-.ui-sidebar {
-    width: 20%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    position: absolute;
-    left: 0;
-}
-
-.ui-grid {
-    position: absolute;
-    top: 20px;
-    left: 25%;
-    right: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.ui-card {
-    height: 60px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-}
-
 /* iPad Mockup */
 .mockup-ipad {
-    width: 320px;
-    height: 440px;
+    /* Landscape, to match the 4:3 iPad screenshots */
+    width: 440px;
+    height: 330px;
     border-radius: 24px;
     right: 0;
     z-index: 2;
@@ -250,32 +227,6 @@ nav {
     border-radius: 20px;
     overflow: hidden;
     position: relative;
-}
-
-.ui-split {
-    display: flex;
-    height: 100%;
-}
-
-.ui-split-left {
-    width: 30%;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.ui-split-right {
-    flex: 1;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    align-content: start;
-}
-
-.ui-split-card {
-    height: 50px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
 }
 
 /* iPhone Mockup */
@@ -303,6 +254,15 @@ nav {
     z-index: 10;
 }
 
+.mockup-mac-screen img,
+.mockup-ipad-screen img,
+.mockup-iphone-screen img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .mockup-iphone-screen {
     background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
     width: 100%;
@@ -310,19 +270,6 @@ nav {
     border-radius: 28px;
     overflow: hidden;
     position: relative;
-}
-
-.ui-list {
-    padding-top: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.ui-row {
-    height: 40px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    margin-bottom: 10px;
 }
 
 /* Responsive hero devices */
@@ -993,7 +940,8 @@ footer {
 .device-slideshow {
     position: relative;
     width: 100%;
-    max-width: 320px;
+    /* 260px iPhone frame plus the 70px arrow gutters on each side */
+    max-width: 400px;
     margin: 0 auto;
     padding: 0 70px;
     overflow: visible;
@@ -1031,7 +979,8 @@ footer {
 
 /* Device frames for screenshots */
 .screenshot-frame-iphone {
-    width: 260px;
+    width: 100%;
+    max-width: 260px;
     background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
     border-radius: 48px;
     padding: 16px;
@@ -1157,6 +1106,12 @@ footer {
 
 .section-black .slide-caption {
     color: #a1a1a6;
+}
+
+/* The slideshow clips the frame's shadow at its edges. On black sections that
+   doesn't show; on the gray one it leaves a darker box, so drop it there. */
+.section-gray .screenshot-frame-ipad {
+    box-shadow: none;
 }
 
 /* Slideshow navigation dots */

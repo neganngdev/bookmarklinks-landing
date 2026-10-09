@@ -166,16 +166,16 @@ nav {
     text-decoration: underline;
 }
 
+/* The devices sit at fixed spots in a 1000 x 540 box: the Mac in back, the
+   iPhone and iPad in front of its lower corners. Smaller screens scale the
+   whole group (see "Responsive hero devices"). */
 .hero-devices {
     position: relative;
     width: 100%;
     max-width: 1000px;
-    height: 500px;
+    height: 540px;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
+    transform-origin: top center;
 }
 
 .device-mockup {
@@ -183,13 +183,14 @@ nav {
     background: #1c1c1e;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
     border: 1px solid #333;
-    transition: transform 0.1s linear;
 }
 
 /* Mac Mockup */
 .mockup-mac {
-    width: 600px;
-    height: 380px;
+    width: 720px;
+    height: 450px;
+    left: calc(50% - 410px);
+    top: 30px;
     border-radius: 20px;
     z-index: 1;
     background: #000;
@@ -210,14 +211,14 @@ nav {
 /* iPad Mockup */
 .mockup-ipad {
     /* Landscape, to match the 4:3 iPad screenshots */
-    width: 440px;
-    height: 330px;
+    width: 400px;
+    height: 300px;
     border-radius: 24px;
-    right: 0;
+    left: calc(50% + 90px);
+    top: 210px;
     z-index: 2;
     background: #000;
     border: 3px solid #333;
-    transform: translateX(120px);
 }
 
 .mockup-ipad-screen {
@@ -234,11 +235,11 @@ nav {
     width: 180px;
     height: 380px;
     border-radius: 32px;
-    left: 0;
+    left: calc(50% - 490px);
+    top: 140px;
     z-index: 3;
     background: #000;
     border: 4px solid #444;
-    transform: translateX(-150px);
 }
 
 .mockup-iphone-notch {
@@ -272,26 +273,41 @@ nav {
     position: relative;
 }
 
-/* Responsive hero devices */
-@media (max-width: 900px) {
+/* Responsive hero devices: the group is 980px wide, so scale it to fit and
+   pull up the space it no longer fills. `scale` leaves `translate` free for
+   the scroll parallax in app.js. */
+@media (max-width: 1100px) {
     .hero-devices {
-        transform: scale(0.7);
-        margin-top: -50px;
+        scale: 0.85;
+        margin-bottom: -81px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .hero-devices {
-        transform: scale(0.5);
-        height: 300px;
+        scale: 0.7;
+        margin-bottom: -162px;
     }
+}
 
-    .mockup-ipad {
-        transform: translateX(60px);
+@media (max-width: 700px) {
+    .hero-devices {
+        scale: 0.55;
+        margin-bottom: -243px;
     }
+}
 
-    .mockup-iphone {
-        transform: translateX(-60px);
+@media (max-width: 540px) {
+    .hero-devices {
+        scale: 0.45;
+        margin-bottom: -297px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hero-devices {
+        scale: 0.36;
+        margin-bottom: -346px;
     }
 }
 
@@ -1309,10 +1325,6 @@ footer {
 
     .mac-main {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .hero-devices {
-        height: 300px;
     }
 
     .device-iphone {

@@ -35,7 +35,8 @@ if ('requestIdleCallback' in window) {
 }
 
 // Parallax Effect for Hero Devices
-const macHero = document.getElementById('mac-hero');
+// Moves the devices as one group, so they stay lined up while scrolling.
+const heroDevices = document.querySelector('.hero-devices');
 
 let ticking = false;
 window.addEventListener('scroll', () => {
@@ -45,8 +46,7 @@ window.addEventListener('scroll', () => {
 
             // Hero Parallax (stops after 800px to save performance)
             if (scrollY < 800) {
-                // Keep only Mac parallax; iPhone/iPad stay in CSS-set positions.
-                macHero.style.transform = `translateY(${scrollY * 0.1}px)`;
+                heroDevices.style.translate = `0 ${scrollY * 0.1}px`;
             }
             ticking = false;
         });

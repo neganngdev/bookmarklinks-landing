@@ -1371,6 +1371,13 @@ footer {
     color: var(--accent-link);
 }
 
+.features-note {
+    margin-top: 48px;
+    font-size: 17px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
 .feature-icon {
     width: 32px;
     height: 32px;

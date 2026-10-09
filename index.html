@@ -98,10 +98,27 @@
         <symbol id="ic-shortcut" viewBox="0 0 24 24">
             <path d="M13 2.5L4.5 13.5H11L10 21.5l8.5-11.5H12l1-7.5z" />
         </symbol>
-        <symbol id="ic-menubar" viewBox="0 0 24 24">
-            <rect x="2.5" y="3.5" width="19" height="4.5" rx="1.5" />
-            <path d="M14.5 5.75h4.5" />
-            <rect x="6" y="12" width="12" height="8" rx="2" />
+        <symbol id="ic-backup" viewBox="0 0 24 24">
+            <path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3" />
+            <path d="M21 4.5v5h-5" />
+            <path d="M12 7.5V12l3 2" />
+        </symbol>
+        <symbol id="ic-keyboard" viewBox="0 0 24 24">
+            <path d="M9 9H6.5A2.5 2.5 0 1 1 9 6.5V9z" />
+            <path d="M15 9V6.5A2.5 2.5 0 1 1 17.5 9H15z" />
+            <path d="M15 15h2.5a2.5 2.5 0 1 1-2.5 2.5V15z" />
+            <path d="M9 15v2.5A2.5 2.5 0 1 1 6.5 15H9z" />
+            <path d="M9 9h6v6H9z" />
+        </symbol>
+        <symbol id="ic-extension" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M15.5 8.5l-2 5-5 2 2-5 5-2z" />
+        </symbol>
+        <symbol id="ic-clean" viewBox="0 0 24 24">
+            <path d="M5 19L15 9" />
+            <path d="M14 3.5v3M12.5 5h3" />
+            <path d="M19 9v3M17.5 10.5h3" />
+            <path d="M8 3.5v2M7 4.5h2" />
         </symbol>
         <symbol id="ic-cloud" viewBox="0 0 24 24">
             <path d="M7 18.5h10a4.25 4.25 0 0 0 .4-8.5 6.25 6.25 0 0 0-12-1.6A3.75 3.75 0 0 0 7 18.5z" />
@@ -221,6 +238,17 @@
                         <div class="slideshow-slide">
                             <div class="screenshot-frame-mac">
                                 <div class="screenshot-frame-mac-screen has-screenshot">
+                                    <img src="assets/screenshots/mac-backup.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                                        alt="TabLinker's Backups view on Mac, with closed browser windows ready to restore">
+                                </div>
+                                <div class="screenshot-frame-mac-stand"></div>
+                            </div>
+                            <p class="slide-caption">Closed a window by mistake? Auto-Backup brings it back</p>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="slideshow-slide">
+                            <div class="screenshot-frame-mac">
+                                <div class="screenshot-frame-mac-screen has-screenshot">
                                     <img src="assets/screenshots/mac-safari.webp" width="1600" height="1000" loading="lazy" decoding="async"
                                         alt="The TabLinker Safari extension popup listing 4 open tabs to import">
                                 </div>
@@ -228,7 +256,7 @@
                             </div>
                             <p class="slide-caption">Save every open Safari tab from the toolbar</p>
                         </div>
-                        <!-- Slide 3 -->
+                        <!-- Slide 4 -->
                         <div class="slideshow-slide">
                             <div class="screenshot-frame-mac">
                                 <div class="screenshot-frame-mac-screen has-screenshot">
@@ -251,6 +279,7 @@
                     <div class="slideshow-dot active" data-slide="0"></div>
                     <div class="slideshow-dot" data-slide="1"></div>
                     <div class="slideshow-dot" data-slide="2"></div>
+                    <div class="slideshow-dot" data-slide="3"></div>
                 </div>
             </div>
         </div>
@@ -397,56 +426,76 @@
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-import" /></svg>
                     </div>
                     <h3 class="feature-title">Import from 13 Browsers</h3>
-                    <p class="feature-desc">Pull in every open tab from Safari, Chrome, Arc, Edge, Brave, Vivaldi,
-                        Opera, and more, with a folder created automatically for each browser window.</p>
+                    <p class="feature-desc">Pull in every open tab from Safari, Chrome, Arc, Edge, Brave,
+                        Vivaldi, Opera, and more in one click. Tabs stay grouped by the window they came from,
+                        and private windows are skipped.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
-                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-save" /></svg>
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-backup" /></svg>
                     </div>
-                    <h3 class="feature-title">Save From Anywhere</h3>
-                    <p class="feature-desc">Grab the current tab with a keyboard shortcut on Mac, or save from any app
-                        on iPhone and iPad using the Share Sheet or the Safari extension.</p>
+                    <h3 class="feature-title">Never Lose a Window</h3>
+                    <p class="feature-desc">Auto-Backup quietly saves the windows open in your browsers every
+                        15, 30, or 60 minutes, when you switch away, and before your Mac sleeps. Closed one by
+                        mistake? Bring it back from Backups, even the next day.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-restore" /></svg>
                     </div>
                     <h3 class="feature-title">Restore a Session, or One Window</h3>
-                    <p class="feature-desc">Reopen an entire research session in one click, or pick out just the
-                        window you need. Links open in whichever browser you prefer.</p>
+                    <p class="feature-desc">Reopen an entire research session in one click, or pick out just
+                        the window you need. Links open in whichever browser you prefer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-keyboard" /></svg>
+                    </div>
+                    <h3 class="feature-title">Work From the Keyboard</h3>
+                    <p class="feature-desc">&#8963;&#8997;&#8984;S imports your tabs, &#8963;&#8997;&#8984;T
+                        saves the current tab, and &#8963;&#8997;&#8984;B backs up every window, from any app.
+                        Keep TabLinker in the menu bar instead of the Dock.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-extension" /></svg>
+                    </div>
+                    <h3 class="feature-title">Safari Extension</h3>
+                    <p class="feature-desc">Save every open tab from Safari's toolbar on Mac, iPhone, and
+                        iPad, or reopen a saved folder's tabs in one tap.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-save" /></svg>
+                    </div>
+                    <h3 class="feature-title">Save From Anywhere</h3>
+                    <p class="feature-desc">Grab the current tab with a keyboard shortcut on Mac, or save from
+                        any app on iPhone and iPad with the Share Sheet, which keeps each page's real title,
+                        even for YouTube.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-window" /></svg>
                     </div>
-                    <h3 class="feature-title">Browse by Window</h3>
-                    <p class="feature-desc">A dedicated By Window view groups tabs by the browser window they came
-                        from, so a 150-tab import stays easy to read.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon-wrap">
-                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-select" /></svg>
-                    </div>
-                    <h3 class="feature-title">Select Many at Once</h3>
-                    <p class="feature-desc">Multi-select tabs to move or delete them in one go. On iPhone and iPad,
-                        just drag down the list to select a whole run of them.</p>
+                    <h3 class="feature-title">Grouped by Window</h3>
+                    <p class="feature-desc">Every import keeps its windows as separate groups, so a 150-tab
+                        session stays easy to read and each window can be restored on its own.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-folder" /></svg>
                     </div>
                     <h3 class="feature-title">Folders, Tags, Notes, and Pins</h3>
-                    <p class="feature-desc">Organize with custom folder icons and colors, add tags and notes, and pin
-                        the folders you use most to the top of the list.</p>
+                    <p class="feature-desc">Organize with custom folder icons and colors, add tags and notes,
+                        and pin the folders you use most to the top of the list.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
-                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-trash" /></svg>
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-select" /></svg>
                     </div>
-                    <h3 class="feature-title">Recently Deleted</h3>
-                    <p class="feature-desc">Deleted something you needed? Anything you remove is recoverable for 30
-                        days, the same way Reminders and Photos work.</p>
+                    <h3 class="feature-title">Select Many at Once</h3>
+                    <p class="feature-desc">Move, delete, or refresh the titles of many tabs at once. On
+                        iPhone and iPad, just drag down the list to select a whole run of them.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
@@ -458,37 +507,50 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-clean" /></svg>
+                    </div>
+                    <h3 class="feature-title">Clean Imports</h3>
+                    <p class="feature-desc">Smart title trimming drops site branding like &ldquo;| Site
+                        Name&rdquo;, pinned tabs can be skipped, and TabLinker can close the tabs it just
+                        saved.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-trash" /></svg>
+                    </div>
+                    <h3 class="feature-title">Recently Deleted</h3>
+                    <p class="feature-desc">Deleted something you needed? Anything you remove is recoverable
+                        for 30 days, the same way Reminders and Photos work.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-export" /></svg>
                     </div>
                     <h3 class="feature-title">Export However You Need</h3>
-                    <p class="feature-desc">Export as JSON, HTML, Markdown, Plain Text, or Rich Text, or build your
-                        own layout with custom templates. Import from JSON, HTML, or a pasted list of URLs.</p>
+                    <p class="feature-desc">Export as JSON, HTML, Markdown, CSV, Plain Text, or Rich Text, or
+                        build your own layout with custom templates. Import from JSON, HTML, or a pasted list
+                        of URLs.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-shortcut" /></svg>
                     </div>
                     <h3 class="feature-title">Apple Shortcuts</h3>
-                    <p class="feature-desc">Automate TabLinker with Shortcuts actions to save a URL, create a folder,
-                        list what is inside one, or open everything in it.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon-wrap">
-                        <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-menubar" /></svg>
-                    </div>
-                    <h3 class="feature-title">Live in the Menu Bar</h3>
-                    <p class="feature-desc">Keep TabLinker in the menu bar and out of your Dock, so saving a session
-                        never means switching away from what you are doing.</p>
+                    <p class="feature-desc">Automate TabLinker with Shortcuts actions that save a URL, create
+                        folders, and list a folder's tabs. On Mac they can also save all your open tabs or
+                        reopen a whole folder.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon-wrap">
                         <svg class="feature-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-cloud" /></svg>
                     </div>
                     <h3 class="feature-title">Private iCloud Sync</h3>
-                    <p class="feature-desc">Everything syncs across iPhone, iPad, and Mac through your own iCloud
-                        account. No TabLinker account, no ads, no tracking.</p>
+                    <p class="feature-desc">Everything syncs across iPhone, iPad, and Mac through your own
+                        iCloud account. No TabLinker account, no ads, no tracking.</p>
                 </div>
             </div>
+            <p class="features-note">Free for up to 50 tabs. Pro is a one-time unlock with no subscription,
+                and keeps a week of Auto-Backup history.</p>
         </div>
     </section>
 
